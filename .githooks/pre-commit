@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Running behave before commit..."
+python -m behave
+status=$?
+
+if [ "$status" -ne 0 ]; then
+    echo "Commit rejected: behave scenarios failed."
+    exit "$status"
+fi
+
+exit 0
