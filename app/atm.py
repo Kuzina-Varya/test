@@ -1,19 +1,14 @@
-from dataclasses import dataclass
-
-
-@dataclass(frozen=True)
-class WithdrawalResult:
-    success: bool
-    message: str
-
-
 class BankAccount:
     def __init__(self, balance: int) -> None:
         self.balance = balance
+        self.message = ""
 
-    def withdraw(self, amount: int) -> WithdrawalResult:
+    def withdraw(self, amount: int) -> bool:
+        """Снимает деньги, если на счете достаточно средств."""
         if amount > self.balance:
-            return WithdrawalResult(False, "Недостаточно средств")
+            self.message = "Недостаточно средств"
+            return False
 
         self.balance -= amount
-        return WithdrawalResult(True, "Операция выполнена")
+        self.message = "Операция выполнена"
+        return True

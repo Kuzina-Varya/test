@@ -10,12 +10,13 @@ def step_account_with_balance(context, balance):
 
 @when("клиент пытается снять {amount:d} рублей")
 def step_client_withdraws(context, amount):
-    context.result = context.account.withdraw(amount)
+    context.operation_success = context.account.withdraw(amount)
+    context.message = context.account.message
 
 
 @then("банкомат отклоняет операцию")
 def step_atm_rejects_operation(context):
-    assert context.result.success is False
+    assert context.operation_success is False
 
 
 @then("баланс клиента остается {balance:d} рублей")
